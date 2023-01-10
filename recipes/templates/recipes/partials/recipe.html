@@ -1,31 +1,31 @@
 <div class="recipe recipe-list-item">
     <div class="recipe-cover">
-        <img src="https://via.placeholder.com/1280x720/4d86c4" alt="temporaria">
+        <img src="{{recipe.cover.url}}" alt="temporaria">
     </div>
 
     <div class="recipe-title-container">
-        <h2 class="recipe-title">Lorem ipsum dolor sit amet.</h2>
+        <h2 class="recipe-title">{{recipe.title}}</h2>
     </div>
 
     <div class="recipe-author">
         <span class="recipe-author-item">
             <i class="fas fa-user"></i>
-            Joice Soares
+            {{recipe.author.first_name}} {{recipe.author.last_name}}
         </span>
         <span class="recipe-author-item">
             <i class="fas fa-calendar-alt"></i>
-            06/01/2023 às 13:50
+            {{recipe.created_at|date:"d/m/Y"}} às {{recipe.created_at|date:"H:i"}}
         </span>
         <span class="recipe-author-item">
             <a href="/recipes/category/cafe-da-manha/">
                 <i class="fas fa-calendar-alt"></i>
-                <span>Café da manhã</span>
+                <span>{{recipe.category.name}}</span>
             </a>                                        
         </span>
     </div>
 
     <div class="recipe-content">
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis in quo maxime blanditiis voluptatibus hic mollitia aperiam est repudiandae, perspiciatis laborum iure maiores sint eveniet cumque animi dolores at vitae!</p>
+        <p>{{recipe.description}}</p>
     </div>
 
     <div class="recipe-meta-container">
@@ -35,7 +35,7 @@
                 Preparo
             </h3>
             <div class="recipe-meta-text">
-                0 Minutos
+                {{recipe.preparation_time}} {{recipe.preparation_time_unit}}
             </div>
         </div>
         <div class="recipe-meta recipe-servings">
@@ -44,15 +44,23 @@
                  Porções
             </h3>
             <div class="recipe-meta-text">
-                0 Porções
+                {{recipe.servings}} {{recipe.servings_unit}}
             </div>
         </div>
     </div>
+    {% if is_detail_page is not True %}
+        <footer class="recipe-footer">
+            <a class="recipe-read-more button button-dark button-full-width" href="/recipes/3/">
+                <i class="fas fa-eye"></i>
+                <span>ver mais...</span>
+            </a>
+        </footer>
+    {% endif %}
 
-    <footer class="recipe-footer">
-        <a class="recipe-read-more button button-dark button-full-width" href="/recipes/3/">
-            <i class="fas fa-eye"></i>
-            <span>ver mais...</span>
-        </a>
-    </footer>
+    {% if is_detail_page is True %}
+        <div class="preparation_steps">
+            {{recipe.preparation_steps | linebreaksbr}}
+        </div>
+    {% endif %}
+
 </div>
